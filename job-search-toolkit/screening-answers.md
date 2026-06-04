@@ -40,6 +40,27 @@ questions against these by similarity, so phrase answers to stand alone.
 - **EEO/diversity questions** (gender, race, veteran, disability): always optional;
   "Decline to self-identify" is a valid, neutral answer that never hurts you.
 
+## B2. Knockout questions (ATS auto-rejects on these — answer EXACTLY & consistently)
+
+Greenhouse, Ashby, Workday and iCIMS filter you out *before a human looks* based on
+these. One contradictory answer = silent rejection. Lock these in and never deviate.
+
+| Knockout question | Your locked answer |
+|---|---|
+| Are you legally authorized to work in [country]? | `[Yes / No]` — must match every app |
+| Will you now or in future require sponsorship? | `[No / Yes]` — must match every app |
+| Years of professional experience? | `[total years]` — same number everywhere |
+| Years with [specific tech, e.g. Python]? | `[honest count, broad]` — don't inflate |
+| Are you willing to relocate? | `Yes` (matches your Indeed preference) |
+| Are you willing to work onsite/hybrid? | `Open to remote, hybrid, or onsite` |
+| Do you have a [required degree]? | `Yes — MS, Imperial College London` |
+| Are you 18 or older? | `Yes` |
+| Have you been employed by [company] before? | `[No / Yes]` |
+| Do you have [required certification]? | `[Yes — AWS Solutions Architect, etc. / No]` |
+
+> Inconsistency is the #1 silent killer on ATS. Pick each answer once, write it here,
+> and the bot reuses it identically everywhere. See `ats-platforms.md`.
+
 ## C. The high-impact open-ended questions
 
 These are where applications are won or lost. Defaults below are written for the
