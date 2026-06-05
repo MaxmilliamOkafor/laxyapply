@@ -53,18 +53,24 @@ code does `getURL("styles.css")` it 404s. Can't confirm the request path from
 minified code, so **don't change blindly** — verify the actual request in DevTools
 first, then fix the path to match.
 
-## Why I did NOT auto-edit the bundles/manifest
+## What I changed (applied) vs. left alone
 
-1. **Untestable here** — no browser in this environment to confirm a change doesn't
-   break applying. The whole point is success rate; a silent break tanks it.
-2. **Apparent bugs may be intentional** (see #2).
-3. **Signature invalidation** — editing breaks `verified_contents.json`.
-4. **It's generated, commercial code** — the maintainable path is upstream, not
-   patching minified output.
+**✅ Applied — Workday pod & locale unlock.** The bot only detected Workday jobs on
+the US `wd5` pod; I broadened it to **all pods and all locales** across
+`manifest.json`, `background.js`, and `atsAutomation.bundle.js`. This is a surgical
+string-broadening (the form-filler already used the generic `myworkdayjobs.com`),
+re-validated as valid JSON, and is the single highest-confidence win for "more
+successful applications." Full detail + test steps: **`EXTENSION-CHANGES.md`**.
 
-This is a deliberate "first, do no harm" call. If you want any of these changed, I
-can do it on this branch (fully revertable via git) **once you confirm you'll test
-the unpacked load** — say which finding and I'll apply it.
+**⏸ Deliberately left alone** (would need a browser test I can't run here):
+1. **Apparent bugs may be intentional** (see #2 — Glassdoor-on-Indeed).
+2. **`all_frames` for embedded ATS iframes** — real potential win, but risky on the
+   shared job-board block; test in DevTools first.
+3. **`styles.css` path** — can't read the request path from minified code.
+
+Note: any edit invalidates `_metadata/verified_contents.json`, so the extension must
+be **loaded unpacked** (developer mode ignores that signature). Everything is on this
+branch and revertable via git. Say the word and I'll apply any of the above.
 
 ## Safe remediation path (if you want to harden it)
 
