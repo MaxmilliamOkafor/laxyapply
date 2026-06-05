@@ -39,6 +39,41 @@ a large increase in addressable jobs from one of the biggest ATS platforms.
 
 ---
 
+## ✅ Change 2 — Fix incomplete iCIMS applications (missing form/EEO steps)
+
+**The problem.** The iCIMS handler in `atsAutomation.bundle.js` is generic
+(`urlPattern: "icims.com"`) and explicitly handles multi-step pages including **EEO
+and additional forms** (the code references `icims-confirmation`, `icims_not_found`,
+eeo logic). But the extension only **injected** its content script on four narrow
+paths: `/jobs/*/*/job`, `/login`, `/candidate`, `/questions`. The application flow
+also passes through `/jobs/*/*/eeo*`, `/jobs/*/*/form*`, and `/forms*` pages — which
+are even **listed (commented-out) in `background.js`** as known iCIMS URLs. Result:
+the bot would start an iCIMS application, then **stall** when it hit an EEO/form step
+it was never injected on, leaving applications half-finished.
+
+**The fix.** Broadened iCIMS injection to match the handler's generic detection:
+
+| File | What changed |
+|------|--------------|
+| `manifest.json` | iCIMS content-script `matches` collapsed from 4 narrow `/jobs/*/*/…` paths to `https://*.icims.com/*` (+ `https://login.icims.com/*`) |
+| `background.js` | the two injection URL-pattern arrays broadened the same way |
+
+**Why it's safe.** The handler self-gates: on a non-application iCIMS page it finds
+no apply elements / no `iframe#icims_content_iframe` and no-ops. Broadening just lets
+it reach the form/EEO steps it already knows how to fill. `manifest.json` re-validated
+as valid JSON.
+
+**Impact.** Multi-step iCIMS applications (a very common enterprise ATS) can now run
+to completion instead of stalling at the EEO/forms stage.
+
+> Side note discovered here: iCIMS/Workday/Greenhouse render their forms in a
+> **same-origin iframe** (`iframe#icims_content_iframe`) that the bot reaches into via
+> `contentDocument` — so those platforms do **not** need `all_frames`. The remaining
+> `all_frames` candidate is Indeed's `smartapply.indeed.com` apply flow (potentially
+> cross-origin); that one still needs a DevTools test before changing.
+
+---
+
 ## How to load & test the modified extension
 
 Editing files invalidates Chrome's package signature (`_metadata/verified_contents
