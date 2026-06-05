@@ -20,6 +20,7 @@ decide whether you get a callback:
 | [`per-job-tailoring.md`](per-job-tailoring.md) | One-size resume fails ATS keyword match | 10-minute tailoring per high-value job |
 | [`targeting-config.md`](targeting-config.md) | Bot spraying 15 unrelated job types | Stop diluting your match score |
 | [`ats-platforms.md`](ats-platforms.md) | Treating all 8 ATS platforms the same | Direct-ATS applies = your highest interview rate |
+| [`examples/airbnb-senior-ml-engineer.md`](examples/airbnb-senior-ml-engineer.md) | Abstract templates | A fully worked, ready-to-send tailored application |
 
 ## Recommended workflow
 
